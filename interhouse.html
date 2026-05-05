@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaming Arena - Coming Soon!</title>
+    <style>
+        @import url('[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@700&display=swap)');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Comic Neue', cursive;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; background: #ff6b6b; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 0.5s; background: #4ecdc4; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 1s; background: #ffe66d; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 1.5s; background: #ff6b6b; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 2s; background: #a8e6cf; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 2.5s; background: #dcd6f7; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 3s; background: #ff6b6b; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 3.5s; background: #4ecdc4; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 4s; background: #ffe66d; }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            padding: 20px;
+        }
+
+        .title {
+            font-family: 'Bangers', cursive;
+            font-size: 4rem;
+            color: #fff;
+            text-shadow: 
+                4px 4px 0 #ff6b6b,
+                8px 8px 0 #4ecdc4,
+                12px 12px 0 rgba(0,0,0,0.2);
+            animation: bounce 2s ease-in-out infinite;
+            letter-spacing: 4px;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .status-box {
+            background: linear-gradient(145deg, #ff6b6b, #ee5a5a);
+            border: 6px solid #fff;
+            border-radius: 30px;
+            padding: 30px 50px;
+            margin: 30px auto;
+            max-width: 600px;
+            box-shadow: 
+                0 10px 0 #c44444,
+                0 15px 30px rgba(0,0,0,0.3);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .closed-text {
+            font-size: 2rem;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+        }
+
+        .date-text {
+            font-family: 'Bangers', cursive;
+            font-size: 2.5rem;
+            color: #ffe66d;
+            margin-top: 15px;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px #ffe66d); }
+            to { filter: drop-shadow(0 0 25px #ffe66d); }
+        }
+
+        /* Work in progress sprite */
+        .sprite-container {
+            margin-top: 40px;
+            position: relative;
+            height: 120px;
+        }
+
+        .worker {
+            position: relative;
+            display: inline-block;
+            animation: work 1s steps(1) infinite;
+        }
+
+        .worker-body {
+            width: 60px;
+            height: 80px;
+            position: relative;
+        }
+
+        /* Pixel art worker using CSS */
+        .head {
+            width: 32px;
+            height: 32px;
+            background: #ffdbac;
+            border-radius: 8px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 3px solid #333;
+        }
+
+        .hard-hat {
+            width: 40px;
+            height: 16px;
+            background: #ffe66d;
+            border-radius: 8px 8px 0 0;
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 3px solid #333;
+            border-bottom: none;
+        }
+
+        .eyes {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .eye {
+            width: 6px;
+            height: 6px;
+            background: #333;
+            border-radius: 50%;
+            animation: blink 3s infinite;
+        }
+
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+
+        .body {
+            width: 40px;
+            height: 35px;
+            background: #4ecdc4;
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 8px;
+            border: 3px solid #333;
+        }
+
+        .arm {
+            width: 12px;
+            height: 30px;
+            background: #4ecdc4;
+            position: absolute;
+            top: 32px;
+            border-radius: 6px;
+            border: 3px solid #333;
+            transform-origin: top center;
+        }
+
+        .arm-left {
+            left: 2px;
+            animation: hammerArm 0.5s ease-in-out infinite;
+        }
+
+        .arm-right {
+            right: 2px;
+        }
+
+        @keyframes hammerArm {
+            0%, 100% { transform: rotate(-20deg); }
+            50% { transform: rotate(20deg); }
+        }
+
+        .hammer {
+            position: absolute;
+            top: 25px;
+            left: -20px;
+            animation: hammerSwing 0.5s ease-in-out infinite;
+            transform-origin: right center;
+        }
+
+        @keyframes hammerSwing {
+            0%, 100% { transform: rotate(-30deg); }
+            50% { transform: rotate(30deg); }
+        }
+
+        .hammer-head {
+            width: 20px;
+            height: 14px;
+            background: #888;
+            border: 2px solid #333;
+            border-radius: 3px;
+        }
+
+        .hammer-handle {
+            width: 6px;
+            height: 20px;
+            background: #8b4513;
+            border: 2px solid #333;
+            margin-left: 7px;
+        }
+
+        .legs {
+            position: absolute;
+            top: 62px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 4px;
+        }
+
+        .leg {
+            width: 14px;
+            height: 25px;
+            background: #2c3e50;
+            border-radius: 4px;
+            border: 3px solid #333;
+        }
+
+        /* Sparks */
+        .sparks {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .spark {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #ffe66d;
+            border-radius: 50%;
+            animation: sparkle 0.5s ease-out infinite;
+        }
+
+        .spark:nth-child(1) { animation-delay: 0s; }
+        .spark:nth-child(2) { animation-delay: 0.1s; left: 10px; }
+        .spark:nth-child(3) { animation-delay: 0.2s; left: -10px; }
+        .spark:nth-child(4) { animation-delay: 0.15s; left: 5px; top: -5px; }
+
+        @keyframes sparkle {
+            0% { transform: scale(1) translateY(0); opacity: 1; }
+            100% { transform: scale(0) translateY(-20px); opacity: 0; }
+        }
+
+        .wip-text {
+            font-family: 'Bangers', cursive;
+            font-size: 1.5rem;
+            color: #ffe66d;
+            margin-top: 20px;
+            animation: wiggle 0.5s ease-in-out infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        /* Controller icons floating */
+        .controller {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.3;
+            animation: floatController 6s ease-in-out infinite;
+        }
+
+        .controller:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .controller:nth-child(2) { top: 20%; right: 10%; animation-delay: 1s; }
+        .controller:nth-child(3) { bottom: 20%; left: 8%; animation-delay: 2s; }
+        .controller:nth-child(4) { bottom: 15%; right: 5%; animation-delay: 3s; }
+
+        @keyframes floatController {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="controller">🎮</div>
+    <div class="controller">🕹️</div>
+    <div class="controller">🎮</div>
+    <div class="controller">🕹️</div>
+
+    <div class="container">
+        <h1 class="title">🎮 Gaming Arena 🎮</h1>
+        
+        <div class="status-box">
+            <p class="closed-text">Currently Closed!</p>
+            <p class="date-text">Opens After May 20th! ⚡</p>
+        </div>
+
+        <div class="sprite-container">
+            <div class="worker">
+                <div class="worker-body">
+                    <div class="hard-hat"></div>
+                    <div class="head">
+                        <div class="eyes">
+                            <div class="eye"></div>
+                            <div class="eye"></div>
+                        </div>
+                    </div>
+                    <div class="body"></div>
+                    <div class="arm arm-left">
+                        <div class="hammer">
+                            <div class="hammer-head"></div>
+                            <div class="hammer-handle"></div>
+                        </div>
+                    </div>
+                    <div class="arm arm-right"></div>
+                    <div class="legs">
+                        <div class="leg"></div>
+                        <div class="leg"></div>
+                    </div>
+                </div>
+                <div class="sparks">
+                    <div class="spark"></div>
+                    <div class="spark"></div>
+                    <div class="spark"></div>
+                    <div class="spark"></div>
+                </div>
+            </div>
+        </div>
+
+        <p class="wip-text">🔧 Work In Progress 🔧</p>
+    </div>
+</body>
+</html>
