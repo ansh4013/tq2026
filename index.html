@@ -564,6 +564,61 @@
 
     footer { background:var(--bg); }
 
+    /* ── inline link style (all screen sizes) ── */
+    .inline-link { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+    .inline-link:hover { color: #8fa8ff; }
+
+    /* ── ACCORDION — mobile only ── */
+    @media (max-width: 600px) {
+      .acc-header {
+        display: flex; align-items: center; justify-content: space-between;
+        cursor: pointer; user-select: none; padding: 1.2em 1.4em;
+        background: var(--surface); border-bottom: 1px solid var(--border);
+        font-family:'Syne',sans-serif; font-weight:700; font-size:.9em; color:#fff;
+        transition: background .2s;
+      }
+      .acc-header:hover { background: var(--surface2); }
+      .acc-header-label { color: var(--blue); }
+      .acc-chevron { font-size:.7em; color:var(--muted); transition:transform .3s ease; flex-shrink:0; margin-left:1em; }
+      .acc-item.open .acc-chevron { transform: rotate(180deg); }
+      .acc-body { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+      .acc-item.open .acc-body { max-height: 800px; }
+      .acc-body-inner { padding: 1.4em 1.6em 1.8em; }
+      /* hide cell-label/title on mobile — header shows them */
+      .cell-label, .cell-title { display: none; }
+      .acc-desktop-wrap { border: none !important; }
+      /* first arena panel open by default */
+      #acc-arena-about { }
+      /* tighter house cards inside accordion */
+      .acc-body-inner .arena-houses { background: none; border: none; gap: 8px; display: grid; grid-template-columns: 1fr 1fr; }
+      .acc-body-inner .house-card { border: 1px solid var(--border); padding: 1em; }
+      /* tighter game pills inside accordion */
+      .acc-body-inner .arena-games { background: none; border: none; gap: 6px; display: flex; flex-direction: column; }
+      .acc-body-inner .game-pill { border: 1px solid var(--border); padding: .9em 1.2em; }
+    }
+
+    /* ── ACCORDION — desktop/tablet: always expanded, header hidden ── */
+    @media (min-width: 601px) {
+      .acc-header { display: none; }
+      .acc-body { max-height: none !important; overflow: visible; }
+      .acc-body-inner { padding: 0; }
+      .acc-chevron { display: none; }
+      /* show cell-label and cell-title on desktop */
+      .cell-label { display: flex !important; align-items: center; gap: 6px; font-family:'IBM Plex Mono',monospace; font-size:.6em; letter-spacing:3px; text-transform:uppercase; color:var(--blue); margin-bottom:.7em; }
+      .cell-label::before { content:'//'; opacity:.35; }
+      .cell-title { display: block !important; font-family:'Syne',sans-serif; font-weight:800; font-size:1.05em; color:#fff; margin-bottom:.6em; }
+      /* restore about grid layout on desktop */
+      .acc-desktop-wrap { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border) !important; overflow: hidden; margin-bottom: 1px; }
+      .acc-item { background: var(--surface); padding: 2em; transition: background .2s; position: relative; overflow: hidden; }
+      .acc-item::before { content:''; position:absolute; left:0; top:0; bottom:0; width:2px; background:transparent; transition:background .25s; }
+      .acc-item:hover { background: var(--surface2); }
+      .acc-item:hover::before { background: var(--blue); }
+      /* restore arena desktop */
+      .acc-desktop-wrap.arena-wrap { display: block !important; background: none; border: 1px solid rgba(61,214,140,.2) !important; }
+      .acc-desktop-wrap.arena-wrap .acc-item { background: var(--surface); border-bottom: 1px solid rgba(61,214,140,.1); padding: 2em 2.4em; }
+      .acc-desktop-wrap.arena-wrap .acc-item::before { background: transparent; }
+    }
+
     /* ── TABLET (≤900px) ── */
     @media(max-width:900px){
       .hero { padding:88px 6vw 70px; justify-content:center; }
@@ -821,43 +876,82 @@
     <div class="section-label">About</div>
     <h2 class="section-title">What is <span class="hl">TechQuest?</span></h2>
     <div class="title-rule"></div>
-    <div class="about-grid">
-      <div class="about-cell">
-        <div class="cell-label">Overview</div>
-        <div class="cell-title">A Festival of Innovation</div>
-        <div class="cell-body">TechQuest 2026 is the school's annual convergence of creativity and technology — spanning coding, robotics, animation, digital arts, gaming, and public speaking.
-          <ul><li>Open to Classes 5–12</li><li>Team &amp; solo participation</li><li>Competitions + workshops</li><li>Judged by the TechQuest Committee</li></ul>
+
+    <div class="acc-desktop-wrap">
+
+      <div class="acc-item" id="acc-overview">
+        <div class="acc-header" onclick="toggleAcc('acc-overview')">
+          <div><span class="acc-header-label">Overview</span> — A Festival of Innovation</div>
+          <span class="acc-chevron">▼</span>
+        </div>
+        <div class="acc-body">
+          <div class="acc-body-inner cell-body">
+            <div class="cell-label">Overview</div>
+            <div class="cell-title">A Festival of Innovation</div>
+            TechQuest 2026 is the school's annual convergence of creativity and technology — spanning coding, robotics, animation, digital arts, gaming, and public speaking.
+            <ul><li>Open to Classes 5–12</li><li>Team &amp; solo participation</li><li>Competitions + workshops</li><li>Judged by the TechQuest Committee</li></ul>
+            <br>Check the <a href="notice.html" class="inline-link">Notice Panel</a> for all upcoming announcements and updates.
+          </div>
         </div>
       </div>
-      <div class="about-cell">
-        <div class="cell-label">Rules</div>
-        <div class="cell-title">Important Notes</div>
-        <div class="cell-body"><ul>
-          <li>Ensure your events don't clash</li>
-          <li>Results are final and unchallengeable</li>
-          <li>Individual participation allowed unless stated otherwise</li>
-          <li>Selection is first-come, first-served</li>
-          <li>No preliminary rounds unless specified</li>
-        </ul></div>
-      </div>
-      <div class="about-cell">
-        <div class="cell-label">Participation</div>
-        <div class="cell-title">How to Register</div>
-        <div class="cell-body"><ul>
-          <li>Go to the register tab and enter your scholar number.</li>
-          <li>Contact the event head if you face any issues</li>
-          <li>If you are unable to contact anyone then you can tell your problem on the email given below.</li>
-       <li>techquestvsec gmail.com</li>
-        </ul></div>
-      </div>
-      <div class="about-cell">
-        <div class="cell-label">Schedule</div>
-        <div class="cell-title">Grand Finale</div>
-        <div class="cell-body">Your event head will train and guide you right up until the finale.
-          <div class="date-chip">29 – 31 AUG 2026</div>
+
+      <div class="acc-item" id="acc-rules">
+        <div class="acc-header" onclick="toggleAcc('acc-rules')">
+          <div><span class="acc-header-label">Rules</span> — Important Notes</div>
+          <span class="acc-chevron">▼</span>
+        </div>
+        <div class="acc-body">
+          <div class="acc-body-inner cell-body">
+            <div class="cell-label">Rules</div>
+            <div class="cell-title">Important Notes</div>
+            <ul>
+              <li>Ensure your events don't clash</li>
+              <li>Results are final and unchallengeable</li>
+              <li>Individual participation allowed unless stated otherwise</li>
+              <li>Selection is first-come, first-served</li>
+              <li>No preliminary rounds unless specified</li>
+            </ul>
+          </div>
         </div>
       </div>
+
+      <div class="acc-item" id="acc-register">
+        <div class="acc-header" onclick="toggleAcc('acc-register')">
+          <div><span class="acc-header-label">Participation</span> — How to Register</div>
+          <span class="acc-chevron">▼</span>
+        </div>
+        <div class="acc-body">
+          <div class="acc-body-inner cell-body">
+            <div class="cell-label">Participation</div>
+            <div class="cell-title">How to Register</div>
+            <ul>
+              <li>Go to the register tab and enter your scholar number.</li>
+              <li>Contact the event head if you face any issues.</li>
+              <li>Otherwise reach out at techquestvsec@gmail.com</li>
+              <li>For step-by-step help, visit our <a href="https://youtube.com/@techquestvsec?si=qDkZiFHJCs8OJqpC" target="_blank" class="inline-link">YouTube channel</a> — it has tutorial videos covering registration and all events.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item" id="acc-schedule">
+        <div class="acc-header" onclick="toggleAcc('acc-schedule')">
+          <div><span class="acc-header-label">Schedule</span> — Grand Finale</div>
+          <span class="acc-chevron">▼</span>
+        </div>
+        <div class="acc-body">
+          <div class="acc-body-inner cell-body">
+            <div class="cell-label">Schedule</div>
+            <div class="cell-title">Grand Finale</div>
+            Your event head will train and guide you right up until the finale.
+            <br><br>Here is the event schedule — <a href="tt.pdf" target="_blank" class="inline-link">open timetable</a>.
+            <div class="date-chip" style="margin-top:1em;">29 – 31 AUG 2026</div>
+          </div>
+        </div>
+      </div>
+
     </div>
+
     <div class="stat-row">
       <div class="stat-cell"><div class="stat-num">25+</div><div class="stat-lbl">Events</div></div>
       <div class="stat-cell"><div class="stat-num">5–12</div><div class="stat-lbl">Classes</div></div>
@@ -879,11 +973,7 @@
       <div class="arena-hero-left">
         <div class="arena-tagline">Live Competitive Interhouse</div>
         <div class="arena-big-title">Play for yourself<br>Fight for your <span>House</span></div>
-        <p class="arena-desc">
-          The Interhouse Arena is TechQuest's dedicated gaming zone — 9 games, 10 rounds each, live leaderboards. Every level you complete earns points for you <em>and</em> your house.
-          The house leading the board takes over the entire arena's theme.
-          It's individual skill meeting house pride.
-        </p>
+        <p class="arena-desc">9 games, 10 rounds each, live leaderboards. Every level you complete earns points for you <em>and</em> your house. The house leading the board takes over the entire arena's theme. It's individual skill meeting house pride.</p>
         <div class="arena-cta-row">
           <a href="interhouse.html" class="btn-arena-primary">🎮 Enter the Arena →</a>
           <a href="interhouse.html" class="btn-arena-ghost">View Leaderboard</a>
@@ -894,54 +984,25 @@
           <div class="arena-stat"><div class="arena-stat-num">9</div><div class="arena-stat-lbl">Games</div></div>
           <div class="arena-stat"><div class="arena-stat-num">10</div><div class="arena-stat-lbl">Rounds</div></div>
           <div class="arena-stat"><div class="arena-stat-num">4</div><div class="arena-stat-lbl">Houses</div></div>
-
         </div>
         <div class="arena-feature-list">
-          <div class="arena-feature">
-            <span class="arena-feature-icon">🏆</span>
-            <div class="arena-feature-text"><strong>Interhouse Leaderboard</strong>Every point contributes to your house's total score in real time.</div>
-          </div>
-          <div class="arena-feature">
-            <span class="arena-feature-icon">📈</span>
-            <div class="arena-feature-text"><strong>Progress Saved Automatically</strong>Log in with your scholar number — pick up exactly where you left off.</div>
-          </div>
-          <div class="arena-feature">
-            <span class="arena-feature-icon">🎨</span>
-            <div class="arena-feature-text"><strong>Dynamic House Theme</strong>The leading house colours the entire arena. Fight to keep your colours on top.</div>
-          </div>
-          <div class="arena-feature">
-            <span class="arena-feature-icon">🔒</span>
-            <div class="arena-feature-text"><strong>Round-Locked Progression</strong>Complete all 10 levels of a round to unlock the next — no skipping.</div>
-          </div>
+          <div class="arena-feature"><span class="arena-feature-icon">🏆</span><div class="arena-feature-text"><strong>Interhouse Leaderboard</strong>Every point contributes to your house's total score in real time.</div></div>
+          <div class="arena-feature"><span class="arena-feature-icon">📈</span><div class="arena-feature-text"><strong>Progress Saved Automatically</strong>Log in with your scholar number — pick up exactly where you left off.</div></div>
+          <div class="arena-feature"><span class="arena-feature-icon">🎨</span><div class="arena-feature-text"><strong>Dynamic House Theme</strong>The leading house colours the entire arena. Fight to keep your colours on top.</div></div>
+          <div class="arena-feature"><span class="arena-feature-icon">🔒</span><div class="arena-feature-text"><strong>Round-Locked Progression</strong>Complete all 10 levels of a round to unlock the next — no skipping.</div></div>
         </div>
       </div>
     </div>
 
     <!-- House cards -->
     <div class="arena-houses">
-      <div class="house-card" style="--hc:#3dd68c">
-        <span class="house-emoji">🟢</span>
-        <div class="house-name" style="color:#3dd68c">Vikramshila</div>
-        <div class="house-tag">House of Innovation</div>
-      </div>
-      <div class="house-card" style="--hc:#e8b84b">
-        <span class="house-emoji">🟡</span>
-        <div class="house-name" style="color:#e8b84b">Vallabhi</div>
-        <div class="house-tag">House of Wisdom</div>
-      </div>
-      <div class="house-card" style="--hc:#4f6fff">
-        <span class="house-emoji">🔵</span>
-        <div class="house-name" style="color:#4f6fff">Taxilla</div>
-        <div class="house-tag">House of Logic</div>
-      </div>
-      <div class="house-card" style="--hc:#e05c6b">
-        <span class="house-emoji">🔴</span>
-        <div class="house-name" style="color:#e05c6b">Nalanda</div>
-        <div class="house-tag">House of Courage</div>
-      </div>
+      <div class="house-card" style="--hc:#3dd68c"><span class="house-emoji">🟢</span><div class="house-name" style="color:#3dd68c">Vikramshila</div><div class="house-tag">House of Innovation</div></div>
+      <div class="house-card" style="--hc:#e8b84b"><span class="house-emoji">🟡</span><div class="house-name" style="color:#e8b84b">Vallabhi</div><div class="house-tag">House of Wisdom</div></div>
+      <div class="house-card" style="--hc:#4f6fff"><span class="house-emoji">🔵</span><div class="house-name" style="color:#4f6fff">Taxilla</div><div class="house-tag">House of Logic</div></div>
+      <div class="house-card" style="--hc:#e05c6b"><span class="house-emoji">🔴</span><div class="house-name" style="color:#e05c6b">Nalanda</div><div class="house-tag">House of Courage</div></div>
     </div>
 
-    <!-- Games mini-grid -->
+    <!-- Games grid -->
     <div class="arena-games">
       <div class="game-pill" style="--gc:#e8b84b"><span class="game-pill-icon">❓</span><div><div class="game-pill-name">Tech Trivia</div><div class="game-pill-tag">Knowledge</div></div></div>
       <div class="game-pill" style="--gc:#29d4e0"><span class="game-pill-icon">🔤</span><div><div class="game-pill-name">Word Scramble</div><div class="game-pill-tag">Vocab</div></div></div>
@@ -953,7 +1014,6 @@
       <div class="game-pill" style="--gc:#c088ff"><span class="game-pill-icon">🟦</span><div><div class="game-pill-name">Tetris</div><div class="game-pill-tag">Reflex</div></div></div>
       <div class="game-pill" style="--gc:#3dd68c"><span class="game-pill-icon">🔢</span><div><div class="game-pill-name">Sudoku</div><div class="game-pill-tag">Puzzle · 4×4 → 9×9</div></div></div>
     </div>
-
   </div>
 </section>
 
@@ -1024,6 +1084,13 @@
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="shared.js"></script>
 <script>
+// ACCORDION — mobile only
+function toggleAcc(id) {
+  if (window.innerWidth > 600) return;
+  const item = document.getElementById(id);
+  item.classList.toggle('open');
+}
+
 // HOME LINK — scroll to top, highlight only when clicked
 const homeLink = document.getElementById('homeLink');
 homeLink.addEventListener('click', e => {
